@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: operator-secrets-dp
+  namespace: demo
+  labels:
+    app: operator-secrets
+spec:
+  selector:
+    matchLabels:
+      app: operator-secrets
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: operator-secrets
+    spec:
+      containers:
+      - name: operator-secrets
+        image: aristidesbneto/operator-kubernetes-python:latest
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 50m
+            memory: 5Mi
+          limits:
+            cpu: 100m
+            memory: 100Mi
+      restartPolicy: Always
+      serviceAccount: operator-secrets-sa
